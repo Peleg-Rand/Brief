@@ -217,11 +217,11 @@ document.getElementById("logout-btn").addEventListener("click", () => auth.signO
     </div>
     <div class="email-capture fade-in delay-3">
       <p style="margin-bottom: 1rem; color: var(--muted); font-size: 1rem;">Want early access? Join our waitlist.</p>
-      <form id="email-form">
-        <input id="email-input" type="email" placeholder="you@example.com" required />
-        <button type="submit">Join Waitlist</button>
-        <p id="form-message" style="margin-top: 0.75rem; font-size: 0.95rem;"></p>
-      </form>
+      <form id="email-form" onsubmit="return false;">
+  <input id="email-input" type="email" placeholder="you@example.com" required />
+  <button type="submit">Join Waitlist</button>
+  <p id="form-message" style="margin-top: 0.75rem; font-size: 0.95rem;"></p>
+</form>
     </div>
   </header>
 
