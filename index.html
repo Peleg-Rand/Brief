@@ -3,41 +3,171 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brief – Your AI-Powered Digest</title>
+  <title>Brief – Clarity in a Noisy World</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #0c0f1a;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --card: #1e293b;
+      --accent: #3b82f6;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #0f172a; color: #f1f5f9; line-height: 1.6; }
-    a { text-decoration: none; }
-    header, section, footer { padding: 4rem 2rem; max-width: 1100px; margin: auto; }
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; position: sticky; top: 0; background: #0f172a; z-index: 100; }
-    nav a { color: #f1f5f9; margin-left: 1.5rem; font-weight: 600; }
-    .hero { text-align: center; padding-top: 6rem; }
-    .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; }
-    .hero p { font-size: 1.25rem; color: #94a3b8; max-width: 700px; margin: 0 auto 2rem; }
-    .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-    .button, .google { padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; }
-    .button { background: #3b82f6; color: white; }
-    .button:hover { background: #2563eb; }
-    .google { background: white; color: #1f2937; }
-    .google img { width: 20px; height: 20px; }
-    h2.section-title { font-size: 2rem; margin-bottom: 2rem; text-align: center; }
-    .features, .steps { display: flex; flex-direction: column; gap: 1.5rem; text-align: center; }
-    .features div, .steps div { background: #1e293b; border-radius: 12px; padding: 2rem; }
-    .features h3, .steps h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-    blockquote { font-style: italic; color: #cbd5e1; margin: 1rem 0; border-left: 4px solid #3b82f6; padding-left: 1rem; }
-    .faq { max-width: 800px; margin: auto; }
-    .faq h4 { margin-top: 1rem; color: #e2e8f0; }
-    .footer { text-align: center; color: #94a3b8; font-size: 0.9rem; border-top: 1px solid #334155; padding-top: 2rem; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a { text-decoration: none; transition: 0.2s ease-in-out; }
+    a:hover { opacity: 0.85; }
+    header, section, footer { padding: 4rem 1.5rem; max-width: 1100px; margin: auto; }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a {
+      color: var(--text);
+      margin-left: 1.5rem;
+      font-weight: 600;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.9s ease-out forwards;
+    }
+    .fade-in.delay-1 { animation-delay: 0.3s; }
+    .fade-in.delay-2 { animation-delay: 0.6s; }
+    .fade-in.delay-3 { animation-delay: 0.9s; }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .hero {
+      text-align: center;
+      padding-top: 6rem;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .button, .google {
+      padding: 0.85rem 1.7rem;
+      border-radius: 10px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .button {
+      background: var(--primary);
+      color: white;
+    }
+    .button:hover {
+      background: var(--primary-dark);
+    }
+    .google {
+      background: white;
+      color: #1f2937;
+    }
+    .google img {
+      width: 20px;
+      height: 20px;
+    }
+    h2.section-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 700;
+    }
+    .features, .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+    }
+    .features div, .steps div {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .features div:hover, .steps div:hover {
+      transform: translateY(-4px);
+    }
+    .features h3, .steps h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+    blockquote {
+      font-style: italic;
+      color: var(--muted);
+      margin: 1rem auto;
+      border-left: 4px solid var(--primary);
+      padding-left: 1rem;
+      max-width: 700px;
+    }
+    .faq {
+      max-width: 800px;
+      margin: auto;
+      padding-top: 2rem;
+    }
+    .faq h4 {
+      margin-top: 1.2rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid #334155;
+      padding-top: 2rem;
+    }
     @media(min-width: 768px) {
-      .features, .steps { flex-direction: row; justify-content: space-between; }
-      .features div, .steps div { flex: 1; margin: 0 0.5rem; }
+      .features, .steps {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .features div, .steps div {
+        flex: 1;
+        margin: 0 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <nav>
-    <div style="font-weight: 800; font-size: 1.25rem;">Brief</div>
+    <div style="font-weight: 800; font-size: 1.3rem; color: var(--primary);">Brief</div>
     <div>
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
@@ -45,11 +175,11 @@
     </div>
   </nav>
 
-  <header class="hero">
-    <h1>Meet Brief</h1>
-    <p>Your AI-powered audio digest. We turn newsletters, articles, and updates into short voice summaries — delivered daily on your terms.</p>
-    <div class="cta-buttons">
-      <a class="button" href="https://t.me/brief_digest_bot" target="_blank">Start Free on Telegram</a>
+  <header class="hero fade-in">
+    <h1>Clarity in a Noisy World</h1>
+    <p class="fade-in delay-1">Brief turns your newsletters, channels, and articles into clear, AI-powered voice updates. Personalized. Human-sounding. Delivered daily.</p>
+    <div class="cta-buttons fade-in delay-2">
+      <a class="button" href="https://t.me/briefgenie_bot" target="_blank">Start Free on Telegram</a>
       <a class="google" href="/login">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google logo"> Sign in with Google
       </a>
@@ -57,54 +187,56 @@
   </header>
 
   <section id="how">
-    <h2 class="section-title">How It Works</h2>
+    <h2 class="section-title fade-in">How It Works</h2>
     <div class="steps">
-      <div><h3>1. Connect Your Sources</h3><p>Sync newsletters, Telegram channels, and websites you care about.</p></div>
-      <div><h3>2. Pick Your Style</h3><p>Choose your preferred tone, length, and voice style.</p></div>
-      <div><h3>3. Get Your Brief</h3><p>Receive AI-generated audio updates every morning, like a personal podcast.</p></div>
+      <div class="fade-in delay-1"><h3>1. Connect Your Sources</h3><p>Add newsletters, Telegram channels, and articles you care about.</p></div>
+      <div class="fade-in delay-2"><h3>2. Choose Your Style</h3><p>Customize voice, tone, topic focus, and delivery timing.</p></div>
+      <div class="fade-in delay-3"><h3>3. Listen & Go</h3><p>Receive your daily Brief as a voice note or mini podcast — clear and concise.</p></div>
     </div>
   </section>
 
   <section id="features">
-    <h2 class="section-title">Why People Love Brief</h2>
+    <h2 class="section-title fade-in">Why People Love Brief</h2>
     <div class="features">
-      <div><h3>🎧 Personalized Voice Summaries</h3><p>Only the stuff you care about — voiced and ready whenever you are.</p></div>
-      <div><h3>🧠 Reduce Overwhelm</h3><p>Calm the content chaos. We surface signal, not noise.</p></div>
-      <div><h3>⏳ Save 30–60 Minutes a Day</h3><p>Turn long reads into short listens. Start your day informed, fast.</p></div>
+      <div class="fade-in delay-1"><h3>🎧 Audio-first & Natural</h3><p>Human-sounding AI voices — like having a personal narrator.</p></div>
+      <div class="fade-in delay-2"><h3>⚡ Save 30–60 Min Daily</h3><p>No more info overload. Get what matters fast, skip the fluff.</p></div>
+      <div class="fade-in delay-3"><h3>🔐 Private by Design</h3><p>Your inputs stay yours. We’ll never sell or exploit your data.</p></div>
     </div>
   </section>
 
   <section>
-    <h2 class="section-title">What People Are Saying</h2>
-    <blockquote>“This is the first time I actually enjoy catching up on content.” — early user</blockquote>
-    <blockquote>“Brief is what newsletters should’ve always been.” — imaginary VC who will be real soon</blockquote>
+    <h2 class="section-title fade-in">What People Are Saying</h2>
+    <blockquote class="fade-in delay-1">“This is the first time I actually enjoy catching up on content.” — early user</blockquote>
+    <blockquote class="fade-in delay-2">“Brief is what newsletters should’ve always been.” — future VC, probably</blockquote>
   </section>
 
   <section id="faq">
-    <h2 class="section-title">FAQs</h2>
+    <h2 class="section-title fade-in">FAQs</h2>
     <div class="faq">
-      <h4>How much does it cost?</h4>
-      <p>We're free during early access. In the future, we'll offer premium features.</p>
-      <h4>Where does it work?</h4>
-      <p>Telegram to start. WhatsApp and iOS/Android coming soon.</p>
-      <h4>Can I choose what it reads?</h4>
-      <p>Yes. You define the sources and topics. We do the rest.</p>
+      <h4>Is Brief free?</h4>
+      <p>Yes — during early access, Brief is completely free. Premium tiers will come later.</p>
+      <h4>Where can I use it?</h4>
+      <p>Telegram for now. WhatsApp, iOS, and Android are on the roadmap.</p>
+      <h4>How is the voice generated?</h4>
+      <p>Using advanced text-to-speech models that sound natural and human — not robotic.</p>
+      <h4>Can I pick what it reads?</h4>
+      <p>Absolutely. Choose your favorite newsletters, feeds, or even upload content directly.</p>
     </div>
   </section>
 
   <section>
-    <h2 class="section-title">Start Your Brief Now</h2>
-    <div class="cta-buttons">
-      <a class="button" href="https://t.me/brief_digest_bot" target="_blank">Launch Telegram Bot</a>
+    <h2 class="section-title fade-in">Start Your Brief Now</h2>
+    <div class="cta-buttons fade-in delay-1">
+      <a class="button" href="https://t.me/briefgenie_bot" target="_blank">Launch Telegram Bot</a>
       <a class="google" href="/login">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" height="20"> Sign in with Google
       </a>
     </div>
   </section>
 
-  <footer class="footer">
-    © 2025 Brief — Built for clarity.<br>
-    <a href="#" style="color:#94a3b8">Privacy</a> | <a href="mailto:hello@brief-app.com" style="color:#94a3b8">Contact</a>
+  <footer class="footer fade-in">
+    © 2025 Brief — Designed for clarity. <br>
+    <a href="#" style="color: var(--muted)">Privacy</a> | <a href="mailto:hello@brief-app.com" style="color: var(--muted)">Contact</a>
   </footer>
 </body>
 </html>
