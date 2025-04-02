@@ -4,44 +4,70 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brief – Your Daily Digest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #141e30, #243b55);
       color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 2rem;
       text-align: center;
     }
     h1 {
       font-size: 3rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
-    p {
+    p.description {
       font-size: 1.25rem;
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
     }
     a.button {
       padding: 0.8rem 1.5rem;
       background: #00c6ff;
       color: white;
       text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background 0.3s;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s ease;
     }
     a.button:hover {
       background: #007acc;
     }
+    .google-button {
+      background: white;
+      color: #333;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .google-button img {
+      width: 20px;
+      height: 20px;
+    }
     footer {
-      position: absolute;
-      bottom: 20px;
+      margin-top: auto;
       font-size: 0.9rem;
       opacity: 0.6;
     }
@@ -49,8 +75,18 @@
 </head>
 <body>
   <h1>Brief</h1>
-  <p>The fastest way to stay updated. Your personal AI-powered audio summary of everything that matters to you—newsletters, channels, and websites.</p>
-  <a href="mailto:hello@brief-app.com" class="button">Get Early Access</a>
-  <footer>© 2025 Brief</footer>
+  <p class="description">
+    Brief is your AI-powered daily digest that summarizes newsletters, websites, and Telegram channels into short, smart audio updates. Define your interests, choose your format, and stay effortlessly informed—anytime, anywhere.
+  </p>
+
+  <div class="buttons">
+    <a href="https://t.me/brief_digest_bot" class="button" target="_blank">Open Telegram Bot</a>
+    <a href="/login" class="google-button">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
+      Sign in with Google
+    </a>
+  </div>
+
+  <footer>© 2025 Brief – Built for clarity</footer>
 </body>
 </html>
