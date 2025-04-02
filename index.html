@@ -1,4 +1,182 @@
-<!-- Continued from previous HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brief – Clarity in a Noisy World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.splitbee.io/sb.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      const firebaseConfig = {
+        apiKey: "AIzaSyC2VlATnmqgJ-R3rx6Re6D1Jjlg9tLvhaM",
+        authDomain: "brief-app-85674.firebaseapp.com",
+        projectId: "brief-app-85674",
+        storageBucket: "brief-app-85674.firebasestorage.app",
+        messagingSenderId: "182617878053",
+        appId: "1:182617878053:web:5f6a8355c5640986a0d9cc"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      const form = document.getElementById("email-form");
+      form?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const emailInput = document.getElementById("email-input");
+  const message = document.getElementById("form-message");
+  const email = emailInput.value;
+  if (!email) return;
+  try {
+    await db.collection("waitlist").add({ email, timestamp: new Date() });
+    message.textContent = "🎉 You're on the list! We'll be in touch soon.";
+    message.style.color = "var(--highlight)";
+    emailInput.value = "";
+  } catch (err) {
+    message.textContent = "❌ Something went wrong. Please try again later.";
+    message.style.color = "#f87171";
+    console.error(err);
+  }
+});
+          alert("🎉 You're on the list!");
+          emailInput.value = "";
+        } catch (err) {
+          alert("Something went wrong. Please try again later.");
+          console.error(err);
+        }
+      });
+    });
+  </script>
+  <style>
+    :root {
+      --bg: #0c0f1a;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --card: #1e293b;
+      --accent: #3b82f6;
+      --highlight: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      position: relative;
+    }
+    a { text-decoration: none; transition: 0.2s ease-in-out; }
+    a:hover { opacity: 0.85; }
+    header, section, footer { padding: 4rem 1.5rem; max-width: 1100px; margin: auto; }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 1.5rem 2rem;
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1f2937;
+    }
+    nav .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); }
+    nav .nav-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav .nav-links a {
+      color: var(--text);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.9s ease-out forwards; }
+    .fade-in.delay-1 { animation-delay: 0.3s; }
+    .fade-in.delay-2 { animation-delay: 0.6s; }
+    .fade-in.delay-3 { animation-delay: 0.9s; }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    .hero { text-align: center; padding-top: 6rem; }
+    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; }
+    .hero p { font-size: 1.25rem; color: var(--muted); max-width: 680px; margin: 0 auto 2.5rem; }
+    .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+    .button, .google {
+      padding: 0.95rem 1.8rem;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      font-size: 1rem;
+      transition: all 0.25s ease-in-out;
+    }
+    .button { background: var(--highlight); color: white; }
+    .button:hover { background: #059669; transform: scale(1.04); }
+    .google { background: white; color: #1f2937; }
+    .google img { width: 20px; height: 20px; }
+    .email-capture { margin-top: 2.5rem; text-align: center; }
+    .email-capture input[type=email] {
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: none;
+      margin-right: 0.5rem;
+      width: 250px;
+    }
+    .email-capture button {
+      padding: 0.75rem 1.2rem;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease-in-out;
+    }
+    .email-capture button:hover { background: var(--primary); transform: scale(1.05); }
+    .briefbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      animation: fadeInUp 0.8s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Brief</div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </nav>
+
+  <header class="hero fade-in">
+    <h1>Clarity in a Noisy World</h1>
+    <p class="fade-in delay-1">Brief transforms your daily information into bite-sized, AI-powered voice updates — so you can think less and know more.</p>
+    <div class="cta-buttons fade-in delay-2">
+      <a class="button" href="https://t.me/briefgenie_bot" target="_blank">🎧 Try it Free on Telegram</a>
+      <a class="google" href="/login">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google logo"> Sign in with Google
+      </a>
+    </div>
+    <div class="email-capture fade-in delay-3">
+      <p style="margin-bottom: 1rem; color: var(--muted); font-size: 1rem;">Want early access? Join our waitlist.</p>
+      <form id="email-form">
+  <input id="email-input" type="email" placeholder="you@example.com" required />
+  <button type="submit">Join Waitlist</button>
+  <p id="form-message" style="margin-top: 0.75rem; font-size: 0.95rem;"></p>
+</form>
+    </div>
+  </header>
 
 <section id="how">
   <h2 class="section-title fade-in">How It Works</h2>
