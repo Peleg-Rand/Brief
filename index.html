@@ -44,18 +44,33 @@
       });
 
       const signInBtn = document.getElementById("google-signin");
-      if (signInBtn) {
-        signInBtn.addEventListener("click", async () => {
-          const provider = new firebase.auth.GoogleAuthProvider();
-          try {
-            const result = await auth.signInWithPopup(provider);
-            const user = result.user;
-            alert(`Welcome, ${user.displayName}`);
-          } catch (err) {
-            alert("Google Sign-in failed.");
-            console.error(err);
-          }
+if (signInBtn) {
+  signInBtn.addEventListener("click", async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+      const result = await auth.signInWithPopup(provider);
+      const user = result.user;
+
+      // Check if user exists in Firestore
+      const userRef = db.collection("users").doc(user.uid);
+      const doc = await userRef.get();
+
+      if (!doc.exists) {
+        await userRef.set({
+          name: user.displayName,
+          email: user.email,
+          createdAt: new Date()
         });
+      }
+
+      document.getElementById("profile-info").innerHTML = `<p><strong>Name:</strong> ${user.displayName}</p><p><strong>Email:</strong> ${user.email}</p><button id='logout-btn' style='margin-top:1rem; padding:0.6rem 1.2rem; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;'>Log Out</button>`;
+document.getElementById("logout-btn").addEventListener("click", () => auth.signOut().then(() => window.location.reload()));
+    } catch (err) {
+      alert("Google Sign-in failed.");
+      console.error(err);
+    }
+  });
+}
       }
     });
   </script>
@@ -194,3 +209,10 @@
       </form>
     </div>
   </header>
+
+<section id="profile" class="fade-in">
+  <h2 class="section-title">Your Profile</h2>
+  <div id="profile-info" style="text-align:center; font-size:1.1rem; color:var(--muted);">
+    <p>Sign in to see your profile details.</p>
+  </div>
+</section>
