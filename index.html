@@ -1,92 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brief – Your Daily Digest</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brief – Your AI Digest</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to right, #141e30, #243b55);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
-      text-align: center;
+      background: #0f172a;
+      color: #f8fafc;
+      line-height: 1.6;
     }
-    h1 {
+    header, footer {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    header h1 {
       font-size: 3rem;
+      font-weight: 800;
       margin-bottom: 1rem;
     }
-    p.description {
-      font-size: 1.25rem;
-      max-width: 700px;
+    header p {
+      font-size: 1.2rem;
+      color: #94a3b8;
+      max-width: 600px;
       margin: 0 auto 2rem;
-      line-height: 1.6;
     }
     .buttons {
       display: flex;
+      justify-content: center;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
     }
-    a.button {
-      padding: 0.8rem 1.5rem;
-      background: #00c6ff;
-      color: white;
-      text-decoration: none;
+    a.button, a.google {
+      padding: 0.75rem 1.5rem;
       border-radius: 8px;
       font-weight: 600;
-      transition: background 0.3s ease;
-    }
-    a.button:hover {
-      background: #007acc;
-    }
-    .google-button {
-      background: white;
-      color: #333;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.8rem 1.2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
     }
-    .google-button img {
-      width: 20px;
-      height: 20px;
+    a.button {
+      background-color: #3b82f6;
+      color: white;
+    }
+    a.button:hover { background-color: #2563eb; }
+    a.google {
+      background: white;
+      color: #111827;
+    }
+    section {
+      padding: 4rem 1rem;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .steps, .features {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .step, .feature {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .step h3, .feature h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
     }
     footer {
-      margin-top: auto;
+      border-top: 1px solid #334155;
       font-size: 0.9rem;
-      opacity: 0.6;
+      color: #94a3b8;
     }
   </style>
 </head>
 <body>
-  <h1>Brief</h1>
-  <p class="description">
-    Brief is your AI-powered daily digest that summarizes newsletters, websites, and Telegram channels into short, smart audio updates. Define your interests, choose your format, and stay effortlessly informed—anytime, anywhere.
-  </p>
+  <header>
+    <h1>Brief</h1>
+    <p>Your AI-powered audio digest for everything that matters – in minutes a day.</p>
+    <div class="buttons">
+      <a class="button" href="https://t.me/brief_digest_bot" target="_blank">Open Telegram Bot</a>
+      <a class="google" href="/login">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" height="20" alt="Google logo" />
+        Sign in with Google
+      </a>
+    </div>
+  </header>
 
-  <div class="buttons">
-    <a href="https://t.me/briefgenie_bot" class="button" target="_blank">Open Telegram Bot</a>
-    <a href="/login" class="google-button">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
-      Sign in with Google
-    </a>
-  </div>
+  <section>
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>1. Connect your sources</h3>
+        <p>Sync newsletters, Telegram channels, and websites you care about.</p>
+      </div>
+      <div class="step">
+        <h3>2. Choose your format</h3>
+        <p>Pick how often, what topics, and how long you want your updates.</p>
+      </div>
+      <div class="step">
+        <h3>3. Get your digest</h3>
+        <p>Receive clear, AI-generated audio updates directly in Telegram.</p>
+      </div>
+    </div>
+  </section>
 
-  <footer>© 2025 Brief – Built for clarity</footer>
+  <section>
+    <h2>Why Brief?</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>✨ Personalized Audio Summaries</h3>
+        <p>Only the stuff you care about – voiced and ready whenever you are.</p>
+      </div>
+      <div class="feature">
+        <h3>⏳ Save Time Daily</h3>
+        <p>Turn 45-minute reading sessions into 5-minute listens.</p>
+      </div>
+      <div class="feature">
+        <h3>🔗 Works Everywhere</h3>
+        <p>From email to Telegram to the web – your inputs, one output.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Start Your Brief Now</h2>
+    <div class="buttons">
+      <a class="button" href="https://t.me/brief_digest_bot" target="_blank">Launch Telegram Bot</a>
+      <a class="google" href="/login">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" height="20" alt="Google logo" />
+        Sign in with Google
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Brief. Built for clarity. | <a href="#" style="color:#94a3b8; text-decoration: underline;">Privacy</a> | <a href="mailto:hello@brief-app.com" style="color:#94a3b8; text-decoration: underline;">Contact</a>
+  </footer>
 </body>
 </html>
