@@ -11,7 +11,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script defer>
     document.addEventListener("DOMContentLoaded", () => {
-  console.log("🔥 Firebase loaded and DOM ready");
+      console.log("🔥 Firebase loaded and DOM ready");
       const firebaseConfig = {
         apiKey: "AIzaSyC2VlATnmqgJ-R3rx6Re6D1Jjlg9tLvhaM",
         authDomain: "brief-app-85674.firebaseapp.com",
@@ -24,277 +24,347 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
       const auth = firebase.auth();
+      console.log("✅ Firebase initialized", { firebase, db, auth });
 
       const form = document.getElementById("email-form");
       if (form) {
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const emailInput = document.getElementById("email-input");
-    const message = document.getElementById("form-message");
-    const email = emailInput.value;
-    if (!email) return;
-    try {
-      await db.collection("waitlist").add({ email, timestamp: new Date() });
-      message.textContent = "🎉 You're on the list! We'll be in touch soon.";
-      message.style.color = "var(--highlight)";
-      emailInput.value = "";
-      console.log("✅ Email captured:", email);
-    } catch (err) {
-      message.textContent = "❌ Something went wrong. Please try again later.";
-      message.style.color = "#f87171";
-      console.error("❌ Firebase error:", err);
-    }
-  });
-} else {
-  console.warn("❗ Email form not found");
-}
-          message.textContent = "🎉 You're on the list! We'll be in touch soon.";
-          message.style.color = "var(--highlight)";
-          emailInput.value = "";
-        } catch (err) {
-          message.textContent = "❌ Something went wrong. Please try again later.";
-          message.style.color = "#f87171";
-          console.error(err);
-        }
-      });
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const emailInput = document.getElementById("email-input");
+          const message = document.getElementById("form-message");
+          const email = emailInput.value;
+          if (!email) return;
+          try {
+            await db.collection("waitlist").add({ email, timestamp: new Date() });
+            message.textContent = "🎉 You're on the list! We'll be in touch soon.";
+            message.style.color = "var(--highlight)";
+            emailInput.value = "";
+            console.log("✅ Email captured:", email);
+          } catch (err) {
+            message.textContent = "❌ Something went wrong. Please try again later.";
+            message.style.color = "#f87171";
+            console.error("❌ Firebase error:", err);
+          }
+        });
+      } else {
+        console.warn("❗ Email form not found");
+      }
 
       const signInBtn = document.getElementById("google-signin");
-if (signInBtn) {
-  signInBtn.addEventListener("click", async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    try {
-      const result = await auth.signInWithPopup(provider);
-      const user = result.user;
+      if (signInBtn) {
+        signInBtn.addEventListener("click", async () => {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          try {
+            const result = await auth.signInWithPopup(provider);
+            const user = result.user;
 
-      // Save user to Firestore if new
-      const userRef = db.collection("users").doc(user.uid);
-      const doc = await userRef.get();
-      if (!doc.exists) {
-        await userRef.set({
-          name: user.displayName,
-          email: user.email,
-          createdAt: new Date()
+            const userRef = db.collection("users").doc(user.uid);
+            const doc = await userRef.get();
+            if (!doc.exists) {
+              await userRef.set({
+                name: user.displayName,
+                email: user.email,
+                createdAt: new Date()
+              });
+            }
+
+            const profile = document.getElementById("profile-info");
+            if (profile) {
+              profile.innerHTML = `<p><strong>Name:</strong> ${user.displayName}</p>
+                <p><strong>Email:</strong> ${user.email}</p>
+                <button id='logout-btn' style='margin-top:1rem; padding:0.6rem 1.2rem; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;'>Log Out</button>`;
+              document.getElementById("logout-btn").addEventListener("click", () => auth.signOut().then(() => window.location.reload()));
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Google Sign-in failed.");
+          }
         });
-      }
-
-      // Show profile section
-      const profile = document.getElementById("profile-info");
-      if (profile) {
-        profile.innerHTML = `<p><strong>Name:</strong> ${user.displayName}</p>
-          <p><strong>Email:</strong> ${user.email}</p>
-          <button id='logout-btn' style='margin-top:1rem; padding:0.6rem 1.2rem; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;'>Log Out</button>`;
-        document.getElementById("logout-btn").addEventListener("click", () => auth.signOut().then(() => window.location.reload()));
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Google Sign-in failed.");
-    }
-  });
-}
-      }
-
-      document.getElementById("profile-info").innerHTML = `<p><strong>Name:</strong> ${user.displayName}</p><p><strong>Email:</strong> ${user.email}</p><button id='logout-btn' style='margin-top:1rem; padding:0.6rem 1.2rem; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;'>Log Out</button>`;
-document.getElementById("logout-btn").addEventListener("click", () => auth.signOut().then(() => window.location.reload()));
-    } catch (err) {
-      alert("Google Sign-in failed.");
-      console.error(err);
-    }
-  });
-}
       }
     });
   </script>
-  <style>
-    :root {
-      --bg: #0c0f1a;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --card: #1e293b;
-      --accent: #3b82f6;
-      --highlight: #10b981;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-padding-top: 80px; scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    header, section, footer { padding: 4rem 1.5rem; max-width: 1100px; margin: auto; }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 1.5rem 2rem;
-      background: var(--bg);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid #1f2937;
-    }
-    nav .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); }
-    nav .nav-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
-    nav .nav-links a { color: var(--text); font-weight: 600; white-space: nowrap; }
-    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.9s ease-out forwards; }
-    .fade-in.delay-1 { animation-delay: 0.3s; }
-    .fade-in.delay-2 { animation-delay: 0.6s; }
-    .fade-in.delay-3 { animation-delay: 0.9s; }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-    .hero { text-align: center; padding-top: 6rem; }
-    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; }
-    .hero p { font-size: 1.25rem; color: var(--muted); max-width: 680px; margin: 0 auto 2.5rem; }
-    .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
-    .button, .google {
-      padding: 0.95rem 1.8rem;
-      border-radius: 12px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-      font-size: 1rem;
-      transition: all 0.25s ease-in-out;
-    }
-    .button { background: var(--highlight); color: white; }
-    .button:hover { background: #059669; transform: scale(1.04); }
-    .google { background: white; color: #1f2937; cursor: pointer; }
-    .google img { width: 20px; height: 20px; }
-    .email-capture { margin-top: 2.5rem; text-align: center; }
-    .email-capture input[type=email] {
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      border: none;
-      margin-right: 0.5rem;
-      width: 250px;
-    }
-    .email-capture button {
-      padding: 0.75rem 1.2rem;
-      border-radius: 10px;
-      background: var(--accent);
-      color: white;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      transition: all 0.25s ease-in-out;
-    }
-    .email-capture button:hover { background: var(--primary); transform: scale(1.05); }
-    .section-title { font-size: 2.5rem; margin-bottom: 2rem; text-align: center; font-weight: 700; }
-    .features, .steps { display: flex; flex-direction: column; gap: 1.5rem; text-align: center; }
-    .features div, .steps div {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, background 0.3s;
-    }
-    .features div:hover, .steps div:hover { transform: translateY(-6px); background: #273549; }
-    .features h3, .steps h3 { font-size: 1.3rem; margin-bottom: 0.6rem; color: var(--accent); }
-    .faq { max-width: 800px; margin: auto; padding-top: 2rem; }
-    .faq h4 { margin-top: 1.2rem; font-size: 1.1rem; color: var(--text); }
-    .footer { text-align: center; color: var(--muted); font-size: 0.9rem; border-top: 1px solid #334155; padding-top: 2.5rem; }
-    .briefbot {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--primary);
-      color: white;
-      padding: 0.8rem 1rem;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      animation: fadeInUp 0.8s ease-out;
-    }
-  </style>
+<style>
+  :root {
+    --bg: #0c0f1a;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --card: #1e293b;
+    --accent: #3b82f6;
+    --highlight: #10b981;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header, section, footer {
+    padding: 4rem 1.5rem;
+    max-width: 1100px;
+    margin: auto;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1.5rem 2rem;
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #1f2937;
+  }
+  nav .logo {
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--primary);
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  nav .nav-links a {
+    color: var(--text);
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: opacity 0.2s ease-in-out;
+  }
+  nav .nav-links a:hover {
+    opacity: 0.85;
+  }
+  .hero {
+    text-align: center;
+    padding-top: 6rem;
+  }
+  .hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .hero p {
+    font-size: 1.25rem;
+    color: var(--muted);
+    max-width: 680px;
+    margin: 0 auto 2.5rem;
+  }
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .button, .google {
+    padding: 0.95rem 1.8rem;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    font-size: 1rem;
+    transition: all 0.25s ease-in-out;
+  }
+  .button {
+    background: var(--highlight);
+    color: white;
+  }
+  .button:hover {
+    background: #059669;
+    transform: scale(1.04);
+  }
+  .google {
+    background: white;
+    color: #1f2937;
+    cursor: pointer;
+  }
+  .google img {
+    width: 20px;
+    height: 20px;
+  }
+  .email-capture {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+  .email-capture input[type=email] {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: none;
+    margin-right: 0.5rem;
+    width: 250px;
+  }
+  .email-capture button {
+    padding: 0.75rem 1.2rem;
+    border-radius: 10px;
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+  }
+  .email-capture button:hover {
+    background: var(--primary);
+    transform: scale(1.05);
+  }
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+  }
+  .features, .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .features div, .steps div {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, background 0.3s;
+  }
+  .features div:hover, .steps div:hover {
+    transform: translateY(-6px);
+    background: #273549;
+  }
+  .features h3, .steps h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    color: var(--accent);
+  }
+  .faq {
+    max-width: 800px;
+    margin: auto;
+    padding-top: 2rem;
+  }
+  .faq h4 {
+    margin-top: 1.2rem;
+    font-size: 1.1rem;
+    color: var(--text);
+  }
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    border-top: 1px solid #334155;
+    padding-top: 2.5rem;
+  }
+  .briefbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.8s ease-out;
+  }
+</style>
 </head>
 <body>
-  <nav>
-    <div class="logo">Brief</div>
-    <div class="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#features">Features</a>
-      <a href="#faq">FAQ</a>
-    </div>
-  </nav>
-
-  <header class="hero fade-in">
+<nav>
+  <div class="logo">Brief</div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</nav>
+<body>
+  <header class="hero">
     <h1>Clarity in a Noisy World</h1>
-    <p class="fade-in delay-1">Brief transforms your daily information into bite-sized, AI-powered voice updates — so you can think less and know more.</p>
-    <div class="cta-buttons fade-in delay-2">
+    <p>Brief transforms your daily information into bite-sized, AI-powered voice updates — so you can think less and know more.</p>
+    <div class="cta-buttons">
       <a class="button" href="https://t.me/briefgenie_bot" target="_blank">🎧 Try it Free on Telegram</a>
       <div class="google" id="google-signin">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"> Sign in with Google
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" height="20"> Sign in with Google
       </div>
     </div>
-    <div class="email-capture fade-in delay-3">
+    <div class="email-capture">
       <p style="margin-bottom: 1rem; color: var(--muted); font-size: 1rem;">Want early access? Join our waitlist.</p>
       <form id="email-form" onsubmit="return false;">
-  <input id="email-input" type="email" placeholder="you@example.com" required />
-  <button type="submit">Join Waitlist</button>
-  <p id="form-message" style="margin-top: 0.75rem; font-size: 0.95rem;"></p>
-</form>
+        <input id="email-input" type="email" placeholder="you@example.com" required />
+        <button type="submit">Join Waitlist</button>
+        <p id="form-message" style="margin-top: 0.75rem; font-size: 0.95rem;"></p>
+      </form>
     </div>
   </header>
 
-<section id="how">
-  <h2 class="section-title fade-in">How It Works</h2>
-  <div class="steps">
-    <div class="fade-in delay-1">
-      <h3>1. Connect Your Sources</h3>
-      <p>Add newsletters, Telegram channels, and articles you care about.</p>
+  <section id="how">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps">
+      <div>
+        <h3>1. Connect Your Sources</h3>
+        <p>Add newsletters, Telegram channels, and articles you care about.</p>
+      </div>
+      <div>
+        <h3>2. Choose Your Style</h3>
+        <p>Customize voice, tone, topic focus, and delivery timing.</p>
+      </div>
+      <div>
+        <h3>3. Listen & Go</h3>
+        <p>Receive your daily Brief as a voice note or mini podcast — clear and concise.</p>
+      </div>
     </div>
-    <div class="fade-in delay-2">
-      <h3>2. Choose Your Style</h3>
-      <p>Customize voice, tone, topic focus, and delivery timing.</p>
+  </section>
+
+  <section id="features">
+    <h2 class="section-title">Why People Love Brief</h2>
+    <div class="features">
+      <div>
+        <h3>🎧 Audio-first & Natural</h3>
+        <p>Human-sounding AI voices — like having a personal narrator.</p>
+      </div>
+      <div>
+        <h3>⚡ Save 30–60 Min Daily</h3>
+        <p>No more info overload. Get what matters fast, skip the fluff.</p>
+      </div>
+      <div>
+        <h3>🔐 Private by Design</h3>
+        <p>Your inputs stay yours. We’ll never sell or exploit your data.</p>
+      </div>
     </div>
-    <div class="fade-in delay-3">
-      <h3>3. Listen & Go</h3>
-      <p>Receive your daily Brief as a voice note or mini podcast — clear and concise.</p>
+  </section>
+
+  <section id="faq">
+    <h2 class="section-title">FAQs</h2>
+    <div class="faq">
+      <h4>Is Brief free?</h4>
+      <p>Yes — during early access, Brief is completely free. Premium tiers will come later.</p>
+      <h4>Where can I use it?</h4>
+      <p>Telegram for now. WhatsApp, iOS, and Android are on the roadmap.</p>
+      <h4>How is the voice generated?</h4>
+      <p>Using advanced text-to-speech models that sound natural and human — not robotic.</p>
+      <h4>Can I pick what it reads?</h4>
+      <p>Absolutely. Choose your favorite newsletters, feeds, or even upload content directly.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="features">
-  <h2 class="section-title fade-in">Why People Love Brief</h2>
-  <div class="features">
-    <div class="fade-in delay-1">
-      <h3>🎧 Audio-first & Natural</h3>
-      <p>Human-sounding AI voices — like having a personal narrator.</p>
+  <section id="profile">
+    <h2 class="section-title">Your Profile</h2>
+    <div id="profile-info" style="text-align:center; font-size:1.1rem; color:var(--muted);">
+      <p>Sign in to see your profile details.</p>
     </div>
-    <div class="fade-in delay-2">
-      <h3>⚡ Save 30–60 Min Daily</h3>
-      <p>No more info overload. Get what matters fast, skip the fluff.</p>
-    </div>
-    <div class="fade-in delay-3">
-      <h3>🔐 Private by Design</h3>
-      <p>Your inputs stay yours. We’ll never sell or exploit your data.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section id="faq">
-  <h2 class="section-title fade-in">FAQs</h2>
-  <div class="faq">
-    <h4>Is Brief free?</h4>
-    <p>Yes — during early access, Brief is completely free. Premium tiers will come later.</p>
-    <h4>Where can I use it?</h4>
-    <p>Telegram for now. WhatsApp, iOS, and Android are on the roadmap.</p>
-    <h4>How is the voice generated?</h4>
-    <p>Using advanced text-to-speech models that sound natural and human — not robotic.</p>
-    <h4>Can I pick what it reads?</h4>
-    <p>Absolutely. Choose your favorite newsletters, feeds, or even upload content directly.</p>
-  </div>
-</section>
+  <footer class="footer">
+    © 2025 Brief — Designed for clarity. <br>
+    <a href="#" style="color: var(--muted)">Privacy</a> | <a href="mailto:hello@brief-app.com" style="color: var(--muted)">Contact</a>
+  </footer>
 
-<footer class="footer fade-in">
-  © 2025 Brief — Designed for clarity. <br>
-  <a href="#" style="color: var(--muted)">Privacy</a> | <a href="mailto:hello@brief-app.com" style="color: var(--muted)">Contact</a>
-</footer>
-
-<div class="briefbot">🤖 Need help? I’m BriefBot.</div>
-
-
+  <div class="briefbot">🤖 Need help? I’m BriefBot.</div>
+</body>
+</html>
