@@ -14,15 +14,19 @@
       --primary-dark: #4f46e5;
       --card: #1e293b;
       --accent: #3b82f6;
+      --highlight: #10b981;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-padding-top: 80px;
+      scroll-behavior: smooth;
+    }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      scroll-behavior: smooth;
     }
     a { text-decoration: none; transition: 0.2s ease-in-out; }
     a:hover { opacity: 0.85; }
@@ -31,16 +35,38 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       padding: 1.5rem 2rem;
       background: var(--bg);
       position: sticky;
       top: 0;
       z-index: 100;
+      border-bottom: 1px solid #1f2937;
     }
-    nav a {
+    nav .logo {
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--primary);
+      flex: 1 1 auto;
+    }
+    nav .nav-links {
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.2rem;
+    }
+    nav .nav-links a {
       color: var(--text);
-      margin-left: 1.5rem;
       font-weight: 600;
+      white-space: nowrap;
+    }
+    @media (max-width: 600px) {
+      nav .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
     }
     .fade-in {
       opacity: 0;
@@ -76,22 +102,24 @@
       justify-content: center;
       gap: 1rem;
       flex-wrap: wrap;
+      margin-top: 1rem;
     }
     .button, .google {
-      padding: 0.85rem 1.7rem;
-      border-radius: 10px;
+      padding: 0.95rem 1.8rem;
+      border-radius: 12px;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      font-size: 1rem;
     }
     .button {
-      background: var(--primary);
+      background: var(--highlight);
       color: white;
     }
     .button:hover {
-      background: var(--primary-dark);
+      background: #059669;
     }
     .google {
       background: white;
@@ -103,7 +131,7 @@
     }
     h2.section-title {
       font-size: 2.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 2.2rem;
       text-align: center;
       font-weight: 700;
     }
@@ -117,15 +145,16 @@
       background: var(--card);
       border-radius: 16px;
       padding: 2rem;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, background 0.3s;
     }
     .features div:hover, .steps div:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px);
+      background: #273549;
     }
     .features h3, .steps h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
       color: var(--accent);
     }
     blockquote {
@@ -151,7 +180,7 @@
       color: var(--muted);
       font-size: 0.9rem;
       border-top: 1px solid #334155;
-      padding-top: 2rem;
+      padding-top: 2.5rem;
     }
     @media(min-width: 768px) {
       .features, .steps {
@@ -167,8 +196,8 @@
 </head>
 <body>
   <nav>
-    <div style="font-weight: 800; font-size: 1.3rem; color: var(--primary);">Brief</div>
-    <div>
+    <div class="logo">Brief</div>
+    <div class="nav-links">
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
       <a href="#faq">FAQ</a>
@@ -177,66 +206,11 @@
 
   <header class="hero fade-in">
     <h1>Clarity in a Noisy World</h1>
-    <p class="fade-in delay-1">Brief turns your newsletters, channels, and articles into clear, AI-powered voice updates. Personalized. Human-sounding. Delivered daily.</p>
+    <p class="fade-in delay-1">Brief transforms your daily information into bite-sized, AI-powered voice updates — so you can think less and know more.</p>
     <div class="cta-buttons fade-in delay-2">
-      <a class="button" href="https://t.me/briefgenie_bot" target="_blank">Start Free on Telegram</a>
+      <a class="button" href="https://t.me/briefgenie_bot" target="_blank">🎧 Try it Free on Telegram</a>
       <a class="google" href="/login">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google logo"> Sign in with Google
       </a>
     </div>
   </header>
-
-  <section id="how">
-    <h2 class="section-title fade-in">How It Works</h2>
-    <div class="steps">
-      <div class="fade-in delay-1"><h3>1. Connect Your Sources</h3><p>Add newsletters, Telegram channels, and articles you care about.</p></div>
-      <div class="fade-in delay-2"><h3>2. Choose Your Style</h3><p>Customize voice, tone, topic focus, and delivery timing.</p></div>
-      <div class="fade-in delay-3"><h3>3. Listen & Go</h3><p>Receive your daily Brief as a voice note or mini podcast — clear and concise.</p></div>
-    </div>
-  </section>
-
-  <section id="features">
-    <h2 class="section-title fade-in">Why People Love Brief</h2>
-    <div class="features">
-      <div class="fade-in delay-1"><h3>🎧 Audio-first & Natural</h3><p>Human-sounding AI voices — like having a personal narrator.</p></div>
-      <div class="fade-in delay-2"><h3>⚡ Save 30–60 Min Daily</h3><p>No more info overload. Get what matters fast, skip the fluff.</p></div>
-      <div class="fade-in delay-3"><h3>🔐 Private by Design</h3><p>Your inputs stay yours. We’ll never sell or exploit your data.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title fade-in">What People Are Saying</h2>
-    <blockquote class="fade-in delay-1">“This is the first time I actually enjoy catching up on content.” — early user</blockquote>
-    <blockquote class="fade-in delay-2">“Brief is what newsletters should’ve always been.” — future VC, probably</blockquote>
-  </section>
-
-  <section id="faq">
-    <h2 class="section-title fade-in">FAQs</h2>
-    <div class="faq">
-      <h4>Is Brief free?</h4>
-      <p>Yes — during early access, Brief is completely free. Premium tiers will come later.</p>
-      <h4>Where can I use it?</h4>
-      <p>Telegram for now. WhatsApp, iOS, and Android are on the roadmap.</p>
-      <h4>How is the voice generated?</h4>
-      <p>Using advanced text-to-speech models that sound natural and human — not robotic.</p>
-      <h4>Can I pick what it reads?</h4>
-      <p>Absolutely. Choose your favorite newsletters, feeds, or even upload content directly.</p>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title fade-in">Start Your Brief Now</h2>
-    <div class="cta-buttons fade-in delay-1">
-      <a class="button" href="https://t.me/briefgenie_bot" target="_blank">Launch Telegram Bot</a>
-      <a class="google" href="/login">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" height="20"> Sign in with Google
-      </a>
-    </div>
-  </section>
-
-  <footer class="footer fade-in">
-    © 2025 Brief — Designed for clarity. <br>
-    <a href="#" style="color: var(--muted)">Privacy</a> | <a href="mailto:hello@brief-app.com" style="color: var(--muted)">Contact</a>
-  </footer>
-</body>
-</html>
