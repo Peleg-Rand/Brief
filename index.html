@@ -11,6 +11,7 @@
   <script defer src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script defer>
     document.addEventListener("DOMContentLoaded", () => {
+  console.log("🔥 Firebase loaded and DOM ready");
       const firebaseConfig = {
         apiKey: "AIzaSyC2VlATnmqgJ-R3rx6Re6D1Jjlg9tLvhaM",
         authDomain: "brief-app-85674.firebaseapp.com",
@@ -25,14 +26,28 @@
       const auth = firebase.auth();
 
       const form = document.getElementById("email-form");
-      form?.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const emailInput = document.getElementById("email-input");
-        const message = document.getElementById("form-message");
-        const email = emailInput.value;
-        if (!email) return;
-        try {
-          await db.collection("waitlist").add({ email, timestamp: new Date() });
+      if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById("email-input");
+    const message = document.getElementById("form-message");
+    const email = emailInput.value;
+    if (!email) return;
+    try {
+      await db.collection("waitlist").add({ email, timestamp: new Date() });
+      message.textContent = "🎉 You're on the list! We'll be in touch soon.";
+      message.style.color = "var(--highlight)";
+      emailInput.value = "";
+      console.log("✅ Email captured:", email);
+    } catch (err) {
+      message.textContent = "❌ Something went wrong. Please try again later.";
+      message.style.color = "#f87171";
+      console.error("❌ Firebase error:", err);
+    }
+  });
+} else {
+  console.warn("❗ Email form not found");
+}
           message.textContent = "🎉 You're on the list! We'll be in touch soon.";
           message.style.color = "var(--highlight)";
           emailInput.value = "";
@@ -275,13 +290,6 @@ document.getElementById("logout-btn").addEventListener("click", () => auth.signO
   </div>
 </section>
 
-<section id="profile" class="fade-in">
-  <h2 class="section-title">Your Profile</h2>
-  <div id="profile-info" style="text-align:center; font-size:1.1rem; color:var(--muted);">
-    <p>Sign in to see your profile details.</p>
-  </div>
-</section>
-
 <footer class="footer fade-in">
   © 2025 Brief — Designed for clarity. <br>
   <a href="#" style="color: var(--muted)">Privacy</a> | <a href="mailto:hello@brief-app.com" style="color: var(--muted)">Contact</a>
@@ -289,9 +297,4 @@ document.getElementById("logout-btn").addEventListener("click", () => auth.signO
 
 <div class="briefbot">🤖 Need help? I’m BriefBot.</div>
 
-<section id="profile" class="fade-in">
-  <h2 class="section-title">Your Profile</h2>
-  <div id="profile-info" style="text-align:center; font-size:1.1rem; color:var(--muted);">
-    <p>Sign in to see your profile details.</p>
-  </div>
-</section>
+
