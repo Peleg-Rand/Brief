@@ -113,6 +113,7 @@
       gap: 0.6rem;
       box-shadow: 0 4px 14px rgba(0,0,0,0.2);
       font-size: 1rem;
+      transition: all 0.25s ease-in-out;
     }
     .button {
       background: var(--highlight);
@@ -120,6 +121,7 @@
     }
     .button:hover {
       background: #059669;
+      transform: scale(1.04);
     }
     .google {
       background: white;
@@ -129,72 +131,35 @@
       width: 20px;
       height: 20px;
     }
-    h2.section-title {
-      font-size: 2.5rem;
-      margin-bottom: 2.2rem;
-      text-align: center;
-      font-weight: 700;
-    }
-    .features, .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    .email-capture {
+      margin-top: 2.5rem;
       text-align: center;
     }
-    .features div, .steps div {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, background 0.3s;
+    .email-capture input[type=email] {
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: none;
+      margin-right: 0.5rem;
+      width: 250px;
+      max-width: 100%;
     }
-    .features div:hover, .steps div:hover {
-      transform: translateY(-6px);
-      background: #273549;
+    .email-capture button {
+      padding: 0.75rem 1.2rem;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease-in-out;
     }
-    .features h3, .steps h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.6rem;
-      color: var(--accent);
-    }
-    blockquote {
-      font-style: italic;
-      color: var(--muted);
-      margin: 1rem auto;
-      border-left: 4px solid var(--primary);
-      padding-left: 1rem;
-      max-width: 700px;
-    }
-    .faq {
-      max-width: 800px;
-      margin: auto;
-      padding-top: 2rem;
-    }
-    .faq h4 {
-      margin-top: 1.2rem;
-      font-size: 1.1rem;
-      color: var(--text);
-    }
-    .footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
-      border-top: 1px solid #334155;
-      padding-top: 2.5rem;
-    }
-    @media(min-width: 768px) {
-      .features, .steps {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      .features div, .steps div {
-        flex: 1;
-        margin: 0 0.5rem;
-      }
+    .email-capture button:hover {
+      background: var(--primary);
+      transform: scale(1.05);
     }
   </style>
 </head>
-<body>
+<body onload="document.getElementById('how').scrollIntoView({ behavior: 'smooth' });">
   <nav>
     <div class="logo">Brief</div>
     <div class="nav-links">
@@ -213,71 +178,11 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google logo"> Sign in with Google
       </a>
     </div>
+    <div class="email-capture fade-in delay-3">
+      <p style="margin-bottom: 1rem; color: var(--muted); font-size: 1rem;">Want early access? Join our waitlist.</p>
+      <form onsubmit="alert('Thanks! You're on the list.'); return false;">
+        <input type="email" placeholder="you@example.com" required />
+        <button type="submit">Join Waitlist</button>
+      </form>
+    </div>
   </header>
-
-  <section id="how">
-    <h2 class="section-title fade-in">How It Works</h2>
-    <div class="steps">
-      <div class="fade-in delay-1">
-        <h3>1. Connect Your Sources</h3>
-        <p>Add newsletters, Telegram channels, and articles you care about.</p>
-      </div>
-      <div class="fade-in delay-2">
-        <h3>2. Choose Your Style</h3>
-        <p>Customize voice, tone, topic focus, and delivery timing.</p>
-      </div>
-      <div class="fade-in delay-3">
-        <h3>3. Listen & Go</h3>
-        <p>Receive your daily Brief as a voice note or mini podcast — clear and concise.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="features">
-    <h2 class="section-title fade-in">Why People Love Brief</h2>
-    <div class="features">
-      <div class="fade-in delay-1">
-        <h3>🎧 Audio-first & Natural</h3>
-        <p>Human-sounding AI voices — like having a personal narrator.</p>
-      </div>
-      <div class="fade-in delay-2">
-        <h3>⚡ Save 30–60 Min Daily</h3>
-        <p>No more info overload. Get what matters fast, skip the fluff.</p>
-      </div>
-      <div class="fade-in delay-3">
-        <h3>🔐 Private by Design</h3>
-        <p>Your inputs stay yours. We’ll never sell or exploit your data.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq">
-    <h2 class="section-title fade-in">FAQs</h2>
-    <div class="faq">
-      <h4>Is Brief free?</h4>
-      <p>Yes — during early access, Brief is completely free. Premium tiers will come later.</p>
-      <h4>Where can I use it?</h4>
-      <p>Telegram for now. WhatsApp, iOS, and Android are on the roadmap.</p>
-      <h4>How is the voice generated?</h4>
-      <p>Using advanced text-to-speech models that sound natural and human — not robotic.</p>
-      <h4>Can I pick what it reads?</h4>
-      <p>Absolutely. Choose your favorite newsletters, feeds, or even upload content directly.</p>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title fade-in">Start Your Brief Now</h2>
-    <div class="cta-buttons fade-in delay-1">
-      <a class="button" href="https://t.me/briefgenie_bot" target="_blank">Launch Telegram Bot</a>
-      <a class="google" href="/login">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="20" height="20"> Sign in with Google
-      </a>
-    </div>
-  </section>
-
-  <footer class="footer fade-in">
-    © 2025 Brief — Designed for clarity. <br>
-    <a href="#" style="color: var(--muted)">Privacy</a> | <a href="mailto:hello@brief-app.com" style="color: var(--muted)">Contact</a>
-  </footer>
-</body>
-</html>
