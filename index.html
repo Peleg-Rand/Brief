@@ -51,16 +51,31 @@ if (signInBtn) {
       const result = await auth.signInWithPopup(provider);
       const user = result.user;
 
-      // Check if user exists in Firestore
+      // Save user to Firestore if new
       const userRef = db.collection("users").doc(user.uid);
       const doc = await userRef.get();
-
       if (!doc.exists) {
         await userRef.set({
           name: user.displayName,
           email: user.email,
           createdAt: new Date()
         });
+      }
+
+      // Show profile section
+      const profile = document.getElementById("profile-info");
+      if (profile) {
+        profile.innerHTML = `<p><strong>Name:</strong> ${user.displayName}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <button id='logout-btn' style='margin-top:1rem; padding:0.6rem 1.2rem; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;'>Log Out</button>`;
+        document.getElementById("logout-btn").addEventListener("click", () => auth.signOut().then(() => window.location.reload()));
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Google Sign-in failed.");
+    }
+  });
+}
       }
 
       document.getElementById("profile-info").innerHTML = `<p><strong>Name:</strong> ${user.displayName}</p><p><strong>Email:</strong> ${user.email}</p><button id='logout-btn' style='margin-top:1rem; padding:0.6rem 1.2rem; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;'>Log Out</button>`;
